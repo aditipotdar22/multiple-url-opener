@@ -196,43 +196,61 @@ https://stackoverflow.com`}
           )}
         </section>
 
-        {/* URL List */}
-        {urls.length > 0 && (
-          <section className="mx-auto mt-8 max-w-3xl rounded-2xl bg-white p-6 shadow">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="font-bold">
-                URL Results
-              </h2>
+      {/* URL List */}
+      {urls.length > 0 && (
+      <section className="mx-auto mt-8 max-w-3xl rounded-2xl bg-white p-6 shadow">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-bold">
+            URL Results
+          </h2>
 
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-sm">
-                {urls.length} URLs
-              </span>
-            </div>
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-sm">
+            {urls.length} URLs
+          </span>
+        </div>
 
-            <div className="space-y-2">
-              {urls.map((url, index) => (
-                <div
-                  key={`${url}-${index}`}
-                  className="flex items-center justify-between rounded-lg border p-3"
+        <div className="space-y-2">
+          {urls.map((url, index) => {
+            const isValid = validateUrl(url);
+
+            return (
+              <div
+                key={`${url}-${index}`}
+                className="flex items-center gap-3 rounded-lg border p-3"
+              >
+                {/* URL */}
+                <span className="min-w-0 flex-1 truncate text-sm">
+                  {url}
+                </span>
+
+                {/* Status */}
+                <span
+                  className={
+                    isValid
+                      ? "shrink-0 text-sm font-semibold text-green-600"
+                      : "shrink-0 text-sm font-semibold text-red-600"
+                  }
                 >
-                  <span className="max-w-[80%] truncate text-sm">
-                    {url}
-                  </span>
+                  {isValid ? "Valid" : "Invalid"}
+                </span>
 
-                  <span
-                    className={
-                      validateUrl(url)
-                        ? "text-sm font-semibold text-green-600"
-                        : "text-sm font-semibold text-red-600"
-                    }
+                {/* Open button */}
+                {isValid && (
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700"
                   >
-                    {validateUrl(url) ? "Valid" : "Invalid"}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+                    Open ↗
+                  </a>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    )}
 
         {/* SEO Content */}
         <section className="mx-auto mt-16 max-w-3xl">
